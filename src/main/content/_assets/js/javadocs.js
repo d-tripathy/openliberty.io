@@ -128,7 +128,7 @@ function addExpandAndCollapseToggleButtonForPackageFrame(contents, leftBottom) {
             if(collapsed === "true"){
                 // Expand the list
                 list2.show();
-                leftBottom.css("height", "70%");
+                leftBottom.css("height", "55%");
                 $(this).empty().append($('<img src="/img/all_guides_minus.svg" alt="Collapse" aria-label="Collapse"/>'));
                 $(this).attr('collapsed', false);
             }
@@ -150,6 +150,13 @@ function addExpandAndCollapseToggleButtonForPackageFrame(contents, leftBottom) {
         header2.append(toggleButton2);
     }            
 }
+function addiPadScrolling() {
+    if (navigator.platform.match(/iPad/)) {
+        $('#javadoc_container').contents().find('.leftTop, .leftBottom, .rightContainer').css("-webkit-overflow-scrolling", "touch");
+        $('#javadoc_container').contents().find('.leftTop, .leftBottom, .rightContainer').css("overflow-y", "scroll");
+    }
+}
+
 
 /*
     Add a listener to scrolling in the main frame.
@@ -166,8 +173,11 @@ function addScrollListener() {
 function addLeftFrameScrollListener(frameToListen, frameElementToListen) {
     var frame = $('#javadoc_container').contents().find(frameToListen);
     var frameHeader = frame.contents().find(frameElementToListen);
+    var packagesList = frame.contents().find("h2[title='Packages']").next();
+    var classesList = frame.contents().find('h1.bar').next();
     var offsetTop = frameHeader.offset().top;
     var origPaddingTop = parseInt(frameHeader.css("padding-top").replace("px", ""));
+    var headerHeight = frameHeader.height();
     // For FireFox, cannot just use border-top, has to use border-top-color, border-top-style, border-top-width
     var origBorderTopWidth = frameHeader.css("border-top-width");
     var origBorderTopStyle = frameHeader.css("border-top-style");
@@ -176,12 +186,14 @@ function addLeftFrameScrollListener(frameToListen, frameElementToListen) {
     'border-top-width: ' + origBorderTopWidth + '; border-top-style: ' + origBorderTopStyle + '; border-top-color: ' + origBorderTopColor +';}</style>';
     frame.contents().off('scroll').on('scroll', function(event){
         var topPos = $(this).scrollTop();
-        if (topPos >= offsetTop) {
+        if (topPos >= offsetTop - 20) {
             if (!frameHeader.hasClass("sticky")) {
                 // sticky css will set margin-top to 0, otherwise the rolling content will appear in the margin-top area.
                 // To maintain the spacing and look with margin-top removed, replace padding-top and border-top
                 // with temporarily values and adjust sticky header with calculated padding-top and border-top.
                 frameHeader.css("padding-top", offsetTop + origPaddingTop);
+                packagesList.css("padding-top", offsetTop + origPaddingTop + headerHeight);
+                classesList.css("padding-top", offsetTop + origPaddingTop + headerHeight);
                 frameHeader.css("border-top-width", "0px");
                 frameHeader.css("border-top-style", "solid");
                 frameHeader.css("border-top-color", "transparent");
@@ -214,22 +226,20 @@ function hideFooter(element) {
     var javadoc_container = $('#javadoc_container').contents();
     var rightFrame = javadoc_container.find(CLASS_FRAME);
     var rightFrameViewportHeight = rightFrame.contents()[0].documentElement.clientHeight;
-    var height = element.height(); 
-    var footer = $("footer");        
+    var height = element.height();
+    var footer = $("footer");
 
     // Show footer if the scrollTop plus the viewport height of the right iFrame is at least 85% past the bottom of the right iFrame.
-    if ((scrollTop + rightFrameViewportHeight) > height * .85) {         
+    if ((scrollTop + rightFrameViewportHeight) > height * .85) {
         if(!footer.data('visible') || footer.data('visible') === "false"){
             footer.data('visible', true);
             footer.css('display', 'block');
-            resizeJavaDocWindow();
         }
     }
-    else{   
+    else{
         if(footer.data('visible')){
-            footer.data('visible', 'false'); 
+            footer.data('visible', 'false');
             footer.css('display', 'none');
-            resizeJavaDocWindow();
         }
     }
 }
@@ -285,6 +295,20 @@ function setDynamicIframeContent() {
     if (targetPage.class) {
         setIFrameContent(CLASS_FRAME, defaultHtmlRootPath + targetPage.class);
     }
+    updateTitle(targetPage.package);
+}
+
+// Update title in browser tab to show current page
+function updateTitle(currentPage) {
+    if (currentPage !== undefined && currentPage !== "allclasses-frame.html") {
+        var currentPage = currentPage.substring(0, currentPage.lastIndexOf('/')).replace(/\//g, ".");
+        if (window.top.location.pathname.includes("microprofile")) {
+            $("title").text(currentPage + " - MicroProfile API - Open Liberty");
+        }
+        else {
+            $("title").text(currentPage + " - Java EE API - Open Liberty");
+        }
+    }
 }
 
 function addClickListeners() {
@@ -296,7 +320,7 @@ function addClickListeners() {
 }
 
 function addClickListener(contents) {
-    contents.bind("click", function(e) {
+    contents.on('click', function(e) {
         var handlingClick = true;
         var iframeName = CLASS_FRAME;
         var hashKey = CLASS_HASH;
@@ -348,24 +372,54 @@ function addClickListener(contents) {
                 state[otherStateKey] = defaultHtmlRootPath + value;
             });
             window.history.pushState(state, null, hashParams);
+
+            var package = hashParams.substring(1).split("&").sort()[1].replace("package=", "");
+            updateTitle(package);
         }
     })
 }
 
 function setPackageContainerHeight() {
     var packageContainer = $('#javadoc_container').contents().find(".leftBottom");
-    if (packageContainer.css("height") !== "70%") {
+    if (packageContainer.css("height") !== "55%") {
         // restore the height in case it is collapsed
-        packageContainer.css("height", "70%");
+        packageContainer.css("height", "55%");
     }
 }
 
 function setIFrameContent(iframeName, href) {
     var iframeContent = $('#javadoc_container').contents().find(iframeName).contents();
-    // replace the content only if the current content is from a different href
-    if (iframeContent.attr("location").href !== href) {    
-        iframeContent.attr("location").replace(href);
+    var errorhref = "/docs/ref/javadocs/doc-404.html";
+    // get current version to create path to all classes frame
+    var path = window.top.location.pathname;
+    if (path.includes("microprofile")) {
+        var currentVersion = path.slice(-4, -1);
+        var allClassesHref = "/javadocs/microprofile-" + currentVersion + "-javadoc/allclasses-frame.html";
     }
+    else {
+        var currentVersion = path.slice(-2, -1);
+        var allClassesHref = "/javadocs/liberty-javaee" + currentVersion + "-javadoc/allclasses-frame.html";
+    }
+
+    // check if href results in 404 and redirect to doc-404.html if it does
+    var http = new XMLHttpRequest();
+    http.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+           // replace the content only if the current content is from a different href
+           if (iframeContent.attr("location").href !== href) {    
+               iframeContent.attr("location").replace(href);
+           }
+        } else if (this.status === 404) {
+           if (iframeName === "iframe.rightIframe") {
+               iframeContent.attr("location").replace(errorhref);
+           }
+           else if (iframeName === ".leftBottom iframe") {
+               iframeContent.attr("location").replace(allClassesHref);
+           }
+        }
+     };
+     http.open('HEAD', href);
+     http.send();
 }
 
 // If package is provided as hashName, then return the class hash. Otherwise return the package hash.
@@ -456,13 +510,18 @@ function getJavaDocHtmlPath(href, returnBase) {
     return javaDocPath;
 }
 
-$(document).ready(function() {
+// add current hash to url when version button clicked
+function versionClick(event) {
+    event.target.href += window.location.hash;
+}
 
+$(document).ready(function() {
+    
     $(window).on('resize', function(){
         resizeJavaDocWindow();
     });
 
-    $('#javadoc_container').load(function() {
+    $('#javadoc_container').on('load', function() {
         resizeJavaDocWindow();
         addAccessibility();
         addExpandAndCollapseToggleButtons();  
@@ -471,6 +530,7 @@ $(document).ready(function() {
         addLeftFrameScrollListener(PACKAGE_FRAME, ".bar");
         addScrollListener();
         addClickListeners();
+        addiPadScrolling();
 
         $('#javadoc_container').contents().find(CLASS_FRAME).on('load', function(){
             addAccessibility();

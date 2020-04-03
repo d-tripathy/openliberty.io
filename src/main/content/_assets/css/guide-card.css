@@ -23,17 +23,17 @@
 
 .small_guide_item {
     margin-bottom: 40px;
-    height: 100px;
+    height: 125px;
     padding-top: 9px;
     padding-left: 14px;
     padding-right: 20px;
     display: block;
-    border-left: solid 9px #eeeff3;
+    border-left: solid 9px #9ea6bb;
     box-shadow:0 2px 4px 0 rgba(63,70,89,0.31);
     transition: box-shadow .2s, border .2s;
 }
 
-.guide_item:hover {
+.guide_item:hover, .small_guide_item:hover {
     box-shadow:0 2px 4px 0 rgba(63,70,89,0.59);
     border-left: solid 9px #e6eda8;
 }
@@ -44,7 +44,7 @@
 }
 
 .guide_title_container {
-    height: 40px;
+    height: 85px;
     overflow: hidden;
 }
 
@@ -64,11 +64,12 @@
     line-height: 21px;
 }
 
-.guide_interactive_container{
-    border: 0.5px solid #F69144;
+.guide_interactive_container, .new_guide_container {
+    border: 1px solid #CC4D19;
     border-radius: 100px;
     float: right;
     padding: 0px 5px;
+    margin-left: 5px;
 }
 
 .interactive_bolt_icon {
@@ -77,16 +78,16 @@
 }
 
 .guide_duration {
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
     font-size: 13px;
     color: #24253A;
     letter-spacing: 0;
 }
 
-.guide_interactive{
-    font-family: BunueloBold;
+.guide_interactive, .guide_new {
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
     font-size: 13px;
-    color: #DC6B00;
+    color: #CC4D19;
     letter-spacing: 0;
     text-transform: uppercase;
 }

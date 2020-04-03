@@ -18,9 +18,11 @@ asciidoctor:
     - coderay-css=class
     - allow-uri-read
 
-google_tag_manager: GTM-TKP3KJ7
-
 markdown: kramdown  
+
+# Adds target=_blank, noopener, and noreferrer to all external links
+target-blank: 
+  add_css_classes: "notranslate" # Add notranslate class to localhost links
 
 assets:
   compress:
@@ -39,7 +41,11 @@ plugins:
   - jekyll-asciidoc
   - jekyll-assets
   - ol-asciidoc
+  - ol-target-blank
   - jekyll-minifier
 exclude:
   - vendor # TravisCI bundles all gems in the vendor directory on its build servers, which Jekyll will mistakenly read and explode on.
   - docs/templates
+  - "*.md"
+  - "*.gendoc"
+  - "*.examples"

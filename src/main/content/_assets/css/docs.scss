@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .bold {
     font-weight: 500;
 }
@@ -45,7 +49,7 @@
 }
 
 #reference_header {
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
     font-size: 14px;
     color: #24243b;
     letter-spacing: 0;
@@ -63,7 +67,7 @@
 #docs_reference_title,
 #all_guides_title,
 #support_title {
-    font-family: BunueloLight;
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
     font-size: 35px;
     color: #1b1c34;
     letter-spacing: 0;
@@ -186,11 +190,6 @@
     text-align: left;
     font-size: 16px;
     margin-bottom: 39px;
-
-    & .orange_link_light_background {
-        color: #C96200;
-        font-weight: 500;
-    }
 }
 
 #docs_contributor_link {
@@ -300,7 +299,7 @@
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
     #docs_intro_container {
         margin-right: auto;
         margin-left: auto;
@@ -311,26 +310,26 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
     #header_background {
         padding-top: 0;
     }
 }
 
 /* Reference Item Sizing */
-@media (max-width: 1199px) {
+@media (max-width: 1199.98px) {
     .reference_item {
         height: 82px;
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
     .reference_title {
         overflow: visible;
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
     .reference_item {
         height: auto;
     }
@@ -347,7 +346,7 @@
     }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
     #all_guides_link_container {
         text-align: left;
     }

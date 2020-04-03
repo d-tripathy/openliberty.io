@@ -20,7 +20,7 @@
 }
 
 #error_message {
-    font-family: BunueloLight;
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
     font-size: 40px;
     color: white;
     text-align: center;
@@ -269,15 +269,16 @@
     background: none;
 }
 
-@media (max-width: 767px) {
-    .navbar {
-        background-color: #1f203e;
+
+/* Mobile and tablet styling */
+
+@media (max-width: 767.98px) {
+    #error_message {
+        margin-top: 46px;
     }
 }
 
-
-/* Mobile and tablet styling */
-@media (max-width: 576px) {
+@media (max-width: 575.98px) {
     #page_container {
         padding-top: 113px;
     }

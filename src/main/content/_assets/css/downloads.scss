@@ -1,0 +1,670 @@
+/*******************************************************************************
+ * Copyright (c) 2017 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+ 
+/* Nav bar color corrections for light page */
+.navbar-dark .navbar-nav .nav-link {
+    color: #5E6B8D;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+    color: #24253A;
+}
+
+#ol_nav_title {
+    color: #2C2E50;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-dark .navbar-nav .nav-link, .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:active, #fork_button {
+        font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
+        font-size: 35px;
+        color: #FFFFFF;
+        margin-right: 26px;
+        margin-left: 26px;
+    }
+    
+    #fork_button {
+        border: none;
+        padding-left: 0;
+        padding-top: 8px;
+        padding-bottom: 27px;
+        border-bottom: 1px solid rgba(201, 214, 254, 0.35);
+        border-radius: 0px;
+    }
+    
+    #fork_button:hover {
+        color: #FFFFFF;
+        border: none;
+        border-bottom: 1px solid rgba(201, 214, 254, 0.35);
+    }
+    
+    #fork_button {
+        display: block;
+    }
+
+}
+
+
+@media (max-width: 767.98px) {
+    .navbar-dark .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(44, 46, 80)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+}
+
+
+
+
+/* INTRO */
+
+#header {
+    position: absolute;
+    top: -3px;
+    left: calc(50% - 1325px);
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+
+#downloads_intro_background {
+    padding-bottom: 60px;
+    overflow: hidden;
+    background-image: url(/img/blue_background.png);
+    background-size: cover;
+    width: 100%;
+    position: relative;
+}
+
+#greenlight {
+    position: absolute;
+    right: calc(50% - 715px);
+    width: 1250px;
+    height: 520px;
+}
+
+#leftcloud {
+    position: absolute;
+    left: calc(50% - 500px);
+    top: 300px;
+    width: 258px;
+    height: 127px;
+}
+
+#rightcloud {
+    position: absolute;
+    right: calc(50% - 560px);
+    top: 290px;
+    width: 306px;
+    height: 158px;
+}
+
+#downloads_intro_text {
+    margin-top: 130px;
+}
+
+#get_started {
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
+    font-size: 55px;
+}
+
+#intro_text_1 {
+    margin-top: 18px;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
+    font-size: 20px;
+    color: #2C2E50;
+}
+
+.download_arrow {
+    display: inline-block;
+}
+
+.table_arrow {
+    display: inline-block;
+    width: 12px;
+    height: 17px;
+    background-image: url('/img/download_arrow_blue.svg');
+    background-repeat: no-repeat;
+    transition: all .3s;
+    margin-right: 10px;
+}
+
+.table_line {
+    width: 12px;
+    height: 3px;
+    background-image: url('/img/download_arrow_line_blue.svg');
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#quick_start_section {
+    margin-top: 70px;
+    margin-bottom: 90px;
+}
+
+.section_title {
+    font-size: 30px;
+    color: #5E6B8D;
+
+    & + p {
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+}
+
+.code_container {
+    background-color: #F1F4FE;
+    font-family: Courier;
+    padding: 30px 40px;
+    border-radius: 7px;
+    margin-bottom: 30px;
+
+    & .indent {
+        padding-left: 35px;
+    }
+}
+
+#sample_app_browser_link {
+    padding-left: 30px;
+
+    & a {
+        border-radius: 7px;
+        padding: 12px 17px;
+        margin-left: 10px;
+        color: #24253a;
+        background-color: #ABD155;
+        text-align: center;
+    }
+
+    & a:hover {
+        background-color: #C7EE63;
+    }
+}
+
+#get_section {
+    margin-bottom: 70px;
+
+    & .tabs_container .col {
+        padding-left: 0px;
+    }
+}
+
+
+/* IMAGES FOR ANIMATION AT BOTTOM OF PAGE */
+
+#ufo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 46px;
+    animation: ufo_hovering 4.5s infinite;
+}
+
+#ufobeam {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: 40px;
+    width: 110px;
+    height: 103px;
+    z-index: 1;
+    animation: ufo_hovering 4.5s infinite;
+}
+
+#cow {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: -29px;
+    width: 73px;
+    height: 60.6px;
+    z-index: 2;
+    animation: cow_hovering 4.5s infinite;
+}
+
+#cowshadow {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: -26px;
+    width: 64px;
+    height: 9px;
+    z-index: 3;
+    animation: shadow_resizing 4.5s infinite;
+}
+
+#bottomleftclouds {
+    display: block;
+    position: relative;
+    top: 70px;
+    left: calc(50% - 300px);
+    width: 445px;
+    height: 172px;
+    z-index: -1;
+}
+
+#bottomrightcloud {
+    display: block;
+    position: relative;
+    top: 4px;
+    left: calc(50% + 100px);
+    width: 140px;
+    height: 69px;
+}
+
+#outerbeam {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: -39px;
+    width: 100px;
+    height: 20px;
+    margin-bottom: -300px;
+}
+
+@keyframes cow_hovering {
+    50% {
+        transform: translateY(-30px) scale(0.8);
+    }
+}
+
+@keyframes ufo_hovering {
+    12.5%, 37.5%, 62.5%, 87.5% {
+        transform: translateY(2px);
+    }
+    25%, 50%, 75%, 100% {
+        transform: none;
+    }
+}
+
+@keyframes shadow_resizing {
+    50% {
+        transform: scale(0.6);
+    }
+}
+
+#cow_text {
+    position: relative;
+    top: -74px;
+    left: calc(50% - 225px);
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
+    font-size: 20px;
+    color: #5E6B8D;
+}
+
+#more_downloads_text {
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
+    font-size: 20px;
+    text-align: center;
+}
+
+
+
+
+
+
+
+/* TABS */
+
+.tabs_container {
+    border-bottom: 4px solid rgba(200, 210, 210, 0.41);
+    margin-bottom: 41px;
+    & .nav-tabs {
+        border-bottom: 1px solid #FFFFFF;
+        & > .nav-item > .nav-link {
+            border: none;
+            color: #5E6B8D;
+            padding-left: 31px;
+            padding-right: 31px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-right: 0px;
+            margin-left: 0px;
+            font-weight: 500;
+        }
+        & .nav-link.active, .nav-link.active:hover {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 4px solid #CC4D19;
+            color: #CC4D19;
+            background: transparent;
+            margin-bottom: -4px;
+        }
+        & .nav-link:hover {
+            background: rgba(232, 236, 236, 0.39);
+            border-color: rgba(232, 236, 236, 0.39);
+        }
+    }
+}
+
+
+/* RELEASES, DEVELOPMENT BUILDS, ECLIPSE DEVELOPER TOOLS */
+
+.builds_container {
+    margin-bottom: 80px;
+}
+
+#runtime_development_builds_title {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#runtime_development_builds_paragraph {
+    margin-bottom: 41px;
+}
+
+#eclipse_developer_tools_container {
+    margin-bottom: 70px;
+}
+
+#eclipse_development_tools_title {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#eclipse_development_tools_text {
+    margin-top: 41px;
+    margin-bottom: 41px;
+    max-width: 800px;
+}
+
+#eclipse_development_tools_releases_title, #eclipse_development_tools_development_builds_title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+#eclipse_development_tools_releases_table_container {
+    margin-bottom: 75px;
+}
+
+
+/* TABLE - COMMON */
+
+.build_table {
+    width: 100%;
+}
+
+.build_table thead tr {
+    color: #3F4659;
+    height: 37px;
+}
+
+.build_table thead tr th {
+    font-weight: normal;
+}
+
+.build_table thead tr th a {
+    color: #3F4659;
+}
+
+.build_table thead tr th a span.glyphicon {
+    margin-left: 10px;
+}
+
+.build_table tbody {
+    font-size: 16px;
+}
+
+.build_table tbody tr {
+    height: 76px;
+}
+
+.build_table tbody tr td:first-child, .build_table thead tr th:first-child {
+    padding-left: 24px;
+}
+
+.build_table tbody tr td:last-child {
+    text-align: right;
+    padding-right: 20px;
+}
+
+.build_table .build_download_button {
+    display: inline-block;
+    border: solid 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 36px;
+    padding-right: 36px;
+    border-radius: 100px;
+    text-align: center;
+    vertical-align: middle;
+    transition: all .2s;
+}
+
+.build_table tbody tr td a:hover {
+    color: #6787D9;
+}
+
+.tests_passed_link, .view_logs_link {
+    transition: all .2s;
+}
+
+
+/* WHITE TABLE */
+
+.white_table thead tr {
+    border-top: 3px solid #5E6B8D;
+    border-bottom: 1px solid #5E6B8D;
+}
+
+.white_table thead th {
+    padding-left: 24px;
+}
+
+.version_column, .javaee_download_column, .webprofile_download_column, .download_button_column, .view_logs_column, .date_column {
+    width: 25%;
+}
+
+.releases_table .date_column {
+    width: 75%;
+}
+
+.releases_table .download_button_column {
+    width: 25%;
+}
+
+.white_table tbody tr {
+    background-color: #FFFFFF;
+    height: 51px;
+    border-bottom: 1px solid #C8D2D2;
+
+    &:empty {
+        display: none;
+    }
+}
+
+.white_table tbody tr:nth-child(odd) {
+    background-color: #f6f8fa;
+}
+
+#runtime_releases_table_container tbody tr {
+    background-color: #FFFFFF;
+}
+
+#runtime_releases_table_container .white_table tbody tr:nth-child(8n), #runtime_releases_table_container .white_table tbody tr:nth-child(8n-1), #runtime_releases_table_container .white_table tbody tr:nth-child(8n-2), #runtime_releases_table_container .white_table tbody tr:nth-child(8n-3) {
+    background-color: #f6f8fa;
+}
+
+.white_table tbody tr td, .white_table tbody tr td:last-child {
+    padding-left: 24px;
+    text-align: left;
+}
+
+.white_table tbody tr td img, .orange_table tbody tr td img {
+    display: none;
+    height: 17px;
+    width: 9px;
+    margin-left: 17px;
+}
+
+.white_table tbody tr td a:hover img{
+    display: inline-block;    
+}
+
+.white_table tbody a{
+    font-weight: 500;
+    color: #546FB5;
+    letter-spacing: 0;
+}
+
+.white_table tbody a:hover{
+    cursor: pointer;
+    & .table_arrow {
+        background-image: url('/img/download_arrow_blue_hover.svg');
+    }
+    & .table_line {
+        background-image: url('/img/download_arrow_line_blue_hover.svg');
+    }
+}
+
+.white_table .table_date {
+    color: #3F4659;
+}
+
+.white_table .build_download_button {
+    color: #5E6B8D;
+    border-color: #5E6B8D;
+}
+
+.white_table .build_download_button:hover {
+    color: white;
+    background-color: #5E6B8D;
+}
+
+
+
+@media (max-width: 991.98px) {
+
+    #get_started {
+        text-align: center;
+        font-size: 48px;
+    }
+
+    #intro_text_1 {
+        font-weight: 500;
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 767.98px) {
+    #downloads_intro_background {
+        margin-bottom: 0px;
+        background-image: none;
+    }
+
+    #greenlight {
+        position: absolute;
+        height: 439px;
+        z-index: -1;
+    }
+
+    #get_started {
+        font-size: 36px;
+    }
+
+    #quick_start_section, #get_section {
+        margin-bottom: 50px;
+    }
+
+    .code_container {
+        overflow-x: scroll;
+    }
+
+    #vertical_tabs .nav-tabs .nav-item {
+        width: 33%;
+    }
+    
+    #tabs_container {
+        margin-top: 0px;
+    }
+
+    .nav-tabs > li, .nav-pills > li {
+        float: none;
+        display: inline-block;
+    }
+
+    .nav-tabs > .nav-item > .nav-link {
+        margin-top: 0px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 12px;
+    }
+
+    #runtime_development_builds_paragraph, #eclipse_development_tools_text {
+        margin-top: 26px;
+        margin-bottom: 22px;
+    }
+
+    #eclipse_development_tools_releases_table_container {
+        margin-bottom: 35px;
+    }
+
+    .eclipse_button_sub_label {
+        display: none;
+    }
+
+    .build_table tbody {
+        font-size: 16px;
+    }
+
+    .build_table .build_download_button {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    #cow_text {
+        position: relative;
+        top: -220px;
+        left: auto;
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .table_container table {
+        width: 550px;
+    }
+
+    .table_container {
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .narrow_table_container table {
+        width: 350px;
+    }
+
+    .narrow_table_container {
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+}

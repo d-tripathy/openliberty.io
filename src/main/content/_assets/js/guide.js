@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 IBM Corporation and others.
+ * Copyright (c) 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,190 +9,202 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 
-// The background is shortened by 200px
-var backgroundSizeAdjustment = 200;
-
-function heightOfVisibleBackground() {
-    var result;
-    if(isBackgroundBottomVisible()) {
-        var scrollTop = $(window).scrollTop();
-        result = getBackgroundAbsoluteBottomPosition() - scrollTop;
-    } else {
-        // Assume the background is filling up the entire viewport
-        result = $(window).height();
-    }
-    return result;
-}
-
-// Get the absolute position of the bottom of the dark background regardless
-// of whether the bottom is in the browser's viewport
-function getBackgroundAbsoluteBottomPosition() {
-    var background = $('#background_container'),
-    elementTop = background.offset().top,
-    elementBottomPosition = elementTop + (background.outerHeight() - backgroundSizeAdjustment);
-    return elementBottomPosition;
-}
-
-// Determine if the bottom of the visible dark background is now visible 
-// in the browser's viewport.
-function isBackgroundBottomVisible() {
-    var background = $('#background_container'),
-        currentTopPosition = $(window).scrollTop(),
-        currentBottomPosition = currentTopPosition + $(window).height(),
-        elementBottomPosition = getBackgroundAbsoluteBottomPosition(),
-        visibleBottom = currentBottomPosition > elementBottomPosition;
-    return visibleBottom;
-}
-
-// Handle when to float the table of content
-function handleFloatingTableOfContent() {
-    if($(window).width() > 769) { // bootstrap grid size for sm column
-        // CURRENTLY IN DESKTOP VIEW
-        if($(window).scrollTop() > $('#toc_column').offset().top) {
-            // The top of the TOC is scrolling off the screen, enable floating TOC.
-
-            // Get the initial width of the TOC before applying position:fixed
-            var toc_width = $('#toc_inner').width();
-            
-            // position:fixed loses the original TOC width.  Restore original width when
-            // applying position fixed.
-            $('#toc_inner').width(toc_width);
-            if(isBackgroundBottomVisible()) {
-                handleTOCScolling();
-            } else {
-                // The entire viewport is filled with the background, so
-                // do not need to worry about the TOC flowing out of the background.
-                enableFloatingTOC();
-            }
-        } else {
-            // TOC no longer needs to float,
-            // remove all the custom styling for floating TOC
-            disableFloatingTOC();
-        }
-    } else {
-        // CURRENTLY IN MOBILE VIEW
-        // Remove any floating TOC when on mobile
-        disableFloatingTOC();
-    }
-}
-
-function disableFloatingTOC() {
-    $('#toc_inner').width("").css({"position": "", "top": ""});
-}
-
-function enableFloatingTOC() {
-    $('#toc_inner').css({"position":"fixed", "top":"0"});
-}
-
-// Handle when the table of content (TOC) is too small to fit completely in the dark background.
-// We want to give the end result of the bottom of the TOC sticks to the bottom of the dark background
-// and the top of the TOC scrolls off screen.
-function handleTOCScolling() {
-    var visible_background_height = heightOfVisibleBackground();
-    var toc_height = $('#toc_inner').height();
-    if(toc_height > visible_background_height) {
-        // The TOC cannot fit in the dark background, allow the TOC to scroll out of viewport
-        // to avoid the TOC overflowing out of the dark background
-        var negativeNumber = visible_background_height - toc_height;
-        $('#toc_inner').css({"position":"fixed", "top":negativeNumber});
-    }
-}
-
-// Remove code block from TOC titles
-function sanitizeTitleInTOC() {
-    var tocLevel1 = $('#toc_container ul.sectlevel1 li');
-    $.each(tocLevel1, function (i, tocElements) {
-        var aHrefElements = $(tocElements).find("a");
-        $.each(aHrefElements, function (i, aHrefElement) {
-            var title = $(aHrefElement).html();
-            // look for code block and remove it 
-            var stringToMatch = "([\\s\\S]*)<\\s*code\\s*>([\\s\\S]*)<\\s*\\/code\\s*>([\\s\\S]*)";
-            var regExprToMatch = new RegExp(stringToMatch, "g");
-            var matches = regExprToMatch.exec(title);
-            if (matches) {
-                $(aHrefElement).html(matches[1] + matches[2] + matches[3]);
-            }
-        });
-    });
-}
-
-$(document).ready(function() {
-
-    var offset;
-    var target;
-    var target_position;
-    var target_width;
+ $(document).ready(function() {
+    
+    var offset;	
+    var target;	
+    var target_position;	
+    var target_width;	
     var target_height;
 
-    $('#preamble').detach().insertBefore('#duration_container');
+    $('#preamble').detach().insertAfter('#duration_container');  
 
-    $('#guide_content pre:not(.no_copy pre)').hover(function(event) {
+    // Read prereqs from json file and add to html
+    $.getJSON( "../../guides/guides-common/guide_prereqs.json", function(data) {
+        var guide_name = window.location.pathname.replace('.html','').replace('/guides/', '');
+        var prereq_html = '';
+        $.each(data.prereqs, function(i, prereq) {
+            // if guide found in prereqs list, add it to the html
+            if (prereq.guides.indexOf(guide_name) > -1) {
+                prereq_html += '<div class="prereq_div"><a href=' + '"' + prereq.link + '"' + ' class="prereq notranslate" target="_blank">' + prereq.name + '</a></div>';
+            }
+            // if prereqs list contains * add prereq to all guides except for excluded guides (if they exist)
+            else if (prereq.guides.indexOf("*") > -1) {
+                if (prereq.exclude) {
+                    // if guide not in prereq exclude list, add it to the html
+                    if (prereq.exclude.indexOf(guide_name) <= -1) {
+                        prereq_html += '<div class="prereq_div"><a href=' + '"' + prereq.link + '"' + ' class="prereq notranslate" target="_blank">' + prereq.name + '</a></div>'; 
+                    }
+                }
+                // guides has * but no exclude, add all to html
+                else {
+                    prereq_html += '<div class="prereq_div"><a href=' + '"' + prereq.link + '"' + ' class="prereq notranslate" target="_blank">' + prereq.name + '</a></div>'; 
+                }
+            }
+        });
 
-        offset = $('#guide_column').position();
-        target = event.currentTarget;
+        $(".prereqs_list").html(prereq_html);
+    });
+
+    function handleSectionChanging(event){
+        // Get the id of the section most in view
+        var id = getScrolledVisibleSectionID();
+        if (id !== null) {
+            var windowHash = window.location.hash;
+            var scrolledToHash = id === "" ? id : '#' + id;
+            if (windowHash !== scrolledToHash) {
+                // Update the URL hash with new section we scrolled into....
+                var currentPath = window.location.pathname;
+                var newPath = currentPath.substring(currentPath.lastIndexOf('/')+1) + scrolledToHash;
+                // Not setting window.location.hash here because that causes an
+                // onHashChange event to fire which will scroll to the top of the
+                // section.  replaceState updates the URL without causing an
+                // onHashChange event.
+                history.replaceState(null, null, newPath);
+
+                // Update the selected TOC entry
+                updateTOCHighlighting(id);    
+            }
+            if(window.innerWidth > twoColumnBreakpoint) {
+                // multipane view
+                // Match the code block on the right to the new id
+                if(typeof(showCorrectCodeBlock) === "function"){
+                    showCorrectCodeBlock(id, null, true);
+                }
+            }
+        }
+    }
+
+    $('#guide_content pre:not(.no_copy pre):not(.code_command pre):not(.hotspot pre):not(.code_column pre)').on('mouseenter', function(event) {
+        offset = $('#guide_column').position();	
+        target = event.currentTarget;	
         var current_target_object = $(event.currentTarget);
-        target_position = current_target_object.position();
+        target_position = current_target_object.position();	
         target_width = current_target_object.outerWidth();
         target_height = current_target_object.outerHeight();
-
-        $('#copy_to_clipboard').css({
-            top: target_position.top + 8,
-            right: parseInt($('#guide_column').css('padding-right')) + 55
+        var right_position = inSingleColumnView() ? 1 : 46;
+         $('#copy_to_clipboard').css({	
+            top: target_position.top + 1,	
+            right: parseInt($('#guide_column').css('padding-right')) + right_position	
         });
-        $('#copy_to_clipboard').stop().fadeIn();
+        $('#copy_to_clipboard').stop().fadeIn();	
+     }).on('mouseleave', function(event) {	
+        if(offset){
+            var x = event.clientX - offset.left;	
+            var y = event.clientY - offset.top + $(window).scrollTop();	
+            if(!(x > target_position.left	
+            && x < target_position.left + target_width	
+            && y > target_position.top	
+            && y < target_position.top + target_height)) {	
+                $('#copy_to_clipboard').stop().fadeOut();	
+                $('#guide_section_copied_confirmation').stop().fadeOut();	
+            }
+        }          	
+     });
 
-    }, function(event) {
-
-        var x = event.clientX - offset.left;
-        var y = event.clientY - offset.top + $(window).scrollTop();
-        if(!(x > target_position.left
-        && x < target_position.left + target_width
-        && y > target_position.top
-        && y < target_position.top + target_height)) {
-            $('#copy_to_clipboard').stop().fadeOut();
-            $('#copied_to_clipboard_confirmation').stop().fadeOut();
-        }  
-
+     $('#copy_to_clipboard').on('click', function(event) {
+        event.preventDefault();
+        // Target was assigned while hovering over the element to copy.
+        copy_element_to_clipboard(target, function(){
+            var current_target_object = $(event.currentTarget);
+            var position = current_target_object.position();	
+            $('#guide_section_copied_confirmation').css({	
+                top: position.top - 18,
+                right: inSingleColumnView() ? 20 : 50	
+            }).stop().fadeIn().delay(3500).fadeOut();
+        });	
     });
 
-    $('#copy_to_clipboard').click(function(event) {
+    // show content for clicked OS tab
+    $('.tab_link').on('click', function(event) {
+        // hide all tab content and remove active class from all links
+        $(".tab_content").hide();
+        $(".tab_link").removeClass("active");
         
-        event.preventDefault();
-        window.getSelection().selectAllChildren(target);
-        if(document.execCommand('copy')) {
-            window.getSelection().removeAllRanges();
-            var current_target_object = $(event.currentTarget);
-            var position = current_target_object.position();
-            $('#copied_to_clipboard_confirmation').css({
-                top: position.top - 25,
-                right: 50
-            }).stop().fadeIn().delay(3500).fadeOut();
-        } else {
-            alert('To copy press CTRL + C');
+        // get class of clicked tab and class of its respective content section
+        var class_list = this.classList;
+        for (var i = 0; i < class_list.length; i++) {
+            var class_name = class_list[i];
+            if (class_name !== "tab_link" && class_name.indexOf("_link") > -1) {
+                var tab_content = "." + class_name.replace("link", "section");
+                var tab_class = "." + class_name;
+            }
         }
 
+        // show content of clicked tab and add active class to clicked tab
+        $(tab_content).show();
+        $(tab_class).addClass("active");
     });
 
-    // RELATED GUIDES
-    //
-    // Add Related guides link to the table of contents, if needed
-    //
-    if( $('#related-guides').length ) {
-        // Add _one_ Related guides link to the very bottom of the table of contents.
-        // The assumption is that the TOC only contains one `sectlevel1` class.
-        $('#toc_container ul.sectlevel1').append('<li><a href="#related-guides">Related guides</a></li>');
-    }
+    $(window).on('scroll', function(event) {
+        // Check if a scroll animation from another piece of code is taking place and prevent normal behavior.
+        if($("body").data('scrolling') === true){
+            return;
+        }
+        handleSectionChanging(event);
+    });
 
-    // Iterate through the titles in TOC to remove code block
-    sanitizeTitleInTOC();
-    
-    // TABLE OF CONTENT
-    //
-    // Keep the table of content (TOC) in view while scrolling (Desktop only)
-    //
-    if ($('#toc_column').length !== 0) {
-        $(window).scroll(function() {
-            handleFloatingTableOfContent();
-        });
-    }
 });
+
+// determine user's operating system and show prerequisite instructions for that OS
+function setDefaultTab() {
+    var OSName = "";
+    // Detect user's operating system
+    var ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf("win") != -1) {
+        OSName = "windows";
+    }
+    if (ua.indexOf("mac") != -1) {
+        OSName = "mac";
+    }
+    if (ua.indexOf("linux") != -1) {
+        OSName = "linux";
+    }
+    // hide tab content except for selected tab and add active class to selected tab
+    $(".tab_content").hide();
+
+    // For each of the groups of tab contents, show the first one unless an OS is detected
+    var sections = $('.sectionbody:has(.tab_content)');
+    for(var i = 0; i < sections.length; i++){
+        var section = $(sections.get(i));
+        // Check if the current OS tab exists in the section
+        if(OSName){
+            var content = section.find("." + OSName + "_section");
+            var tab = section.find("." + OSName + "_link");
+            if(content.length > 0 && tab.length > 0){
+                content.show();                
+                tab.addClass("active");
+                continue;
+            }                
+        }
+        // If the current Operating System's tab has not been found
+        // show the first tab's contents for every set of tabs in this section.
+        var first_tab = section.find('.tab_link').first();
+        // Find OS name to show all of its tab contents in this section.
+        var class_list = first_tab[0].classList;
+        for (var j = 0; j < class_list.length; j++) {
+            var class_name = class_list[j];
+            if (class_name !== "tab_link" && class_name.indexOf("_link") > -1) {
+                var tab_class = "." + class_name;
+                var tab_content_class = "." + class_name.replace("link", "section");
+                section.find(tab_class).addClass("active");
+                section.find(tab_content_class).show();
+                break;
+            }
+        }
+    }
+}
+
+$(window).on("load", function(){
+    $.ready.then(function(){
+       // Both ready and loaded
+       createEndOfGuideContent();
+       setDefaultTab();
+   
+       if (location.hash){
+           handleFloatingTableOfContent();
+           var hash = location.hash;
+           accessContentsFromHash(hash);
+       }
+    });
+ })

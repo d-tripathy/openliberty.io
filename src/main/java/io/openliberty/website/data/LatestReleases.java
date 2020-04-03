@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2018 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package io.openliberty.website.data;
 
 import javax.json.Json;
@@ -6,9 +16,16 @@ import javax.json.JsonObjectBuilder;
 
 import io.openliberty.website.Constants;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class LatestReleases {
+
+	private static final Logger logger = Logger.getLogger(LatestReleases.class.getName());
+
 	private BuildInfo runtime;
 	private BuildInfo tools;
+	
 
 	public LatestReleases() {
 	}
@@ -29,4 +46,10 @@ public class LatestReleases {
 		return json.build();
 	}
 
+	public BuildInfo getRuntimeRelease() {
+		if (logger.isLoggable(Level.FINER)) {
+			logger.log(Level.FINE, "getRuntimeRelease()", runtime);
+		}
+		return runtime;
+	}
 }

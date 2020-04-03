@@ -13,31 +13,37 @@
 }
 
 /* table of column styling */
-#toc_container {
-    padding-top: 55px;
-}
 
-#row, #toc_column, #toc_inner, #config_content {
+#row, #toc_column, #toc_inner {
     height: 100%;
 }
 
 #toc_column {
     padding-left: 0;
+    padding-top: 20px;
+    padding-right: 0;
 }
 
-#toc_title {
-    font-family: BunueloBold; 
-    color: #313653;
-    letter-spacing: 0.2px;
-    line-height: 26px;
-    padding: 23px 39px 6px 26px;
-    width: 23%; /* mobile has to switch to 100% */
-    margin: 0;
-    background: rgba(255,255,255,1);    
+#toc_inner {
+    margin-right: 0px;
+    padding-right: 0px;
+    overflow: auto;
+}
+
+@media (min-width: 767px) {
+    #toc_inner {
+        position: fixed;
+        width: 25%;
+        max-height: calc(100% - 121px);
+    }
 }
 
 a[target="contentFrame"] {
     color: #5D6A8E;
+}
+
+.toc_selected {
+    margin-right: 0px;
 }
 
 .toc_main_selected {
@@ -59,7 +65,6 @@ a[target="contentFrame"] {
 }
 
 iframe.config_content_frame {
-    height: 100%;
     width: 100%;
     border: none;
 }
@@ -68,12 +73,16 @@ iframe.config_content_frame {
     padding-left: 20px;
 }
 
+p{ /*set font-size to 14px in guides. Overrides font-size in paragraph selector of openliberty.scss */
+    font-size:14px;
+}
+
 #config_title { /* not picking up from common, has to have entire config_title css here */
-    font-family: BunueloLight;
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
     font-size: 35px;
     letter-spacing: 0;
-    color: #24233C;
-    margin: 29px 0 13px -2px; 
+    color: #24243B;
+    margin: 29px 0 13px -2px;
 }
 
 #content div.paragraph p.subHeading a+strong {
@@ -99,19 +108,10 @@ div.paragraph p.subsection {
     margin-bottom: 54px;
 }
 
-/* position the subheading below the sticky nav header when the url contains hash using forward and backward 
+/* position the subheading below the sticky nav header when the url contains hash using forward and backward
    arrow navigate thru the history */
 p.subHeading > a, p.subHeading > div.toogle > a {
     position: relative;
-}
-
-p.subHeading > a::before, p.subHeading > div.toogle > a::before {
-    display: inline-block;
-    content: " ";
-    margin-top: -125px;
-    height: 125px;
-    visibility: hidden;
-    pointer-events: none;
 }
 
 /* TABLE STYLING */
@@ -130,7 +130,7 @@ table.subsection {
 th {
     background: #D6D9E4;
     line-height: 26px;
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
     font-size: 11px;
     color: #24243B;
     padding-left: 14px;
@@ -154,11 +154,20 @@ td {
     line-height: 26px;
     padding: 10px 31px 10px 14px;
     border-right: 1px solid rgba(93, 106, 142, 0.3);
+    vertical-align: top;
 }
 
 td p {
     margin: 0;
     font-size: 14px;
+}
+
+tr {
+    border-bottom: 1px solid rgba(93, 106, 142, 0.3);
+}
+
+tr:last-child {
+    border-bottom: none;
 }
 
 tr:nth-child(even) {
@@ -176,7 +185,7 @@ tableblock {
 /* Custom expand/collapse button */
 div.toggle {
     margin-right: 10px;
-    margin-left: -20px; 
+    margin-left: -20px;
     display: inline;
 }
 
@@ -191,7 +200,7 @@ div.toggle:hover {
     width: 100%;
     background: #FFFFFF;
     box-shadow: 5px -2px 9px -1px rgba(63,70,89,0.37);
-    font-family: BunueloLight; /* BunueloCleanPro-Light; */
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial; /* BunueloCleanPro-Light; */
     font-size: 35px;
     color: #5D6A8E;
     letter-spacing: 0;
@@ -200,7 +209,7 @@ div.toggle:hover {
 }
 
 .contentStickyBreadcrumbHeader a.lastParentItem {
-    color: #F4914D;
+    color: #DC6B00;
 }
 
 .stickyBreadcrumb a:hover {
@@ -213,7 +222,7 @@ div.toggle:hover {
     cursor: default;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
     .contentStickyBreadcrumbHeader {
         position: static;
         display: none;
@@ -236,7 +245,7 @@ div.toggle:hover {
   	    overflow-y: scroll;
     }
     */
-    html, body, main {  
+    html, body, main {
         height: unset;
     }
 
@@ -246,9 +255,6 @@ div.toggle:hover {
 }
 
 @media (min-width: 1025px) {
-    html, body, main {  
-        height: 95%;
-    }
 
     /* Has to put the overflow hidden css for desktop here as overriding the values in
        the mobile area still causes horizontal scrolling problem */
@@ -259,9 +265,6 @@ div.toggle:hover {
     /* hide scrollbar for iframe */
     #config_content {
         overflow: hidden;
-    } 
+    }
 
-    iframe.config_content_frame {
-        width: 102%;
-    } 
 }

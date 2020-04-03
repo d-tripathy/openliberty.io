@@ -8,17 +8,17 @@
  */
 
 @font-face {
-    font-family: BunueloLight;
-    src: url("/fonts/BunueloCleanPro-Light.otf");
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
+    src: url("/fonts/BunueloCleanPro-Light.woff");
 }
 
 @font-face {
-    font-family: BunueloBold;
-    src: url("/fonts/BunueloCleanPro-SemiBold.otf");
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
+    src: url("/fonts/BunueloCleanPro-SemiBold.woff");
 }
 
 body {
-    background-color: white;
+    background-color:white;
     font-family: Asap, 'DejaVu Sans', Arial, Helvetica, sans-serif;
 }
 
@@ -31,15 +31,15 @@ a[target="classFrame"] {
 }
 
 h1 {
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
 }
 
 h2 {
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
 }
 
 th[scope='col'] {
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
     font-size: 11px; 
 }
 
@@ -57,7 +57,7 @@ th > a {
     border-top: 1px solid #D4D7E3;
     padding: 20px 0px 0px 8px;
 	margin: 20px 10px 5px 0px;
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
     font-size: 14px;
     color:#313653;
     text-transform: uppercase;
@@ -161,7 +161,7 @@ ul.blockList ul.blockList ul.blockList li.blockList h3 {
 .indexContainer h2,
 .indexContainer h2[title="Packages"] {
     padding: 0 0 0 8px;
-    font-family: BunueloBold;
+    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
     text-transform: uppercase;
     font-size: 14px;
     color:#313653;
@@ -191,7 +191,7 @@ ul.blockList ul.blockList ul.blockList li.blockList h3 {
 }
 
 .overviewSummary tr:nth-child(1):not(.altColor) {
-    font-family:BunueloBold;
+    font-family:BunueloBold, Arial Narrow, Helvetica, Arial;
 }
 
 .overviewSummary caption span, .memberSummary caption span, .typeSummary caption span,
@@ -199,7 +199,7 @@ ul.blockList ul.blockList ul.blockList li.blockList h3 {
 .requiresSummary caption span, .packagesSummary caption span, .providesSummary caption span,
 .usesSummary caption span {
     background-color:#D6D9E4;
-    font-family: BunueloLight;
+    font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
     font-size: 35px;
 	height: auto;
 }
@@ -228,8 +228,7 @@ td.colFirst, td.colSecond, td.colLast, .useSummary td, .constantsSummary td {
 th.colFirst, th.colSecond, th.colLast, th.colConstructorName, .constantsSummary th, .packagesSummary th {
     background:#C8CCD8;
     padding: 0px 3px 0px 7px;
-}
-
+} 
 td.colFirst, th.colFirst {
     font-size: 14px;
 }
@@ -277,18 +276,18 @@ div.block {
     height:45%;
     transition: height 0.5s;
 	border-right: none;
-	border-bottom: none;
+    border-bottom: none;
 }
 
 .leftBottom {
     height:55%;
     transition: height 0.5s;
 	border-right: none;
-	border-top: none;
+    border-top: none;
 }
 
 .rightContainer {
-	border-left: none;
+    border-left: none;
 }
 
 .sticky {
@@ -315,7 +314,7 @@ div.block {
   Mobile styles for the 3 frames
 */
 /* @media only screen and (max-device-width: 767px) {    */
-@media (max-width: 767px) { 
+@media (max-width: 767.98px) { 
     .overviewSummary td.colFirst, .overviewSummary th.colFirst, .requiresSummary td.colFirst, .requiresSummary th.colFirst, .packagesSummary td.colFirst, .packagesSummary td.colSecond, .packagesSummary th.colFirst, .packagesSummary th, .usesSummary td.colFirst, .usesSummary th.colFirst, .providesSummary td.colFirst, .providesSummary th.colFirst, .memberSummary td.colFirst, .memberSummary th.colFirst, .memberSummary td.colSecond, .memberSummary th.colSecond, .memberSummary th.colConstructorName, .typeSummary td.colFirst{
         padding-left: 7px;
     }
@@ -338,7 +337,7 @@ div.block {
 }
 
 /* Allow scrolling in mobile view */
-@media only screen and (max-device-width: 767px){
+@media only screen and (max-device-width: 767.98px){
     .rightContainer{
         overflow: auto;
     }    

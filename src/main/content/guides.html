@@ -11,9 +11,8 @@ permalink: /guides/
 <!-- Build a list of all the documents in the guides code base -->
 {% assign static-guides = site.pages | where: 'layout', 'guide' %}
 {% assign multipane-static-guides = site.pages | where: 'layout', 'guide-multipane' %}
-{% assign interactive-guides = site.pages | where: 'layout', 'interactive-guide' %}
 {% assign multipane-iguides = site.pages | where: 'layout', 'iguide-multipane' %}
-{% assign all-markdown-files = static-guides | concat: interactive-guides | concat: multipane-static-guides | concat: multipane-iguides | sort: 'releasedate' | reverse %}
+{% assign all-markdown-files = static-guides | concat: multipane-static-guides | concat: multipane-iguides | sort: 'releasedate' | reverse %}
 {% assign all-guides = '' | split: '' %}
 
 <!-- Remove any documents deemed private (archived, templates, etc) -->
@@ -39,6 +38,21 @@ permalink: /guides/
     {% endif %}
 {% endfor %}
 
+<!-- Count number of guides from past 30 days-->
+{% assign new_guide_count = 0 %}
+{% for guide in all-guides %}
+    {% assign date_published = guide.releasedate | date:'%s' %}
+    {% assign date_now = 'now' | date:'%s' %}
+    {% assign date_difference = date_now | minus: date_published %}
+
+    <!-- 2592000 is 30 days in seconds (30 days * 24 hours * 60 minutes * 60 seconds) -->
+    {% if date_difference < 2592000 %}
+        {% assign new_guide_count = new_guide_count | plus: 1 %}
+    {% endif %}
+{% endfor %}
+
+<!-- Sort list of guides by date with most recent first -->
+{% assign all_guides_by_date = all-guides | sort: "releasedate" | reverse %}
 
 <!-- INTRODUCTION AND SEARCH BAR -->
 <div id="guides_information_container" class="container">
@@ -80,14 +94,37 @@ permalink: /guides/
     </div>
     <div class="essential row">
         {% for guide in basic-essential-guides %}
-        <div class="guide_column col-xs-12 col-sm-6 col-md-3">
-            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="{{ guide.tags | join: ' ' | downcase }}">
+        <div class="guide_column col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="" data-search-keywords="{{ guide.search-keywords | join: ' ' | downcase }}">
                 <div class="guide_title_and_description_container">
                     <h3 class="guide_title">{{guide.title}}</h3>
                     <p class="guide_description" title="{{guide.description}}">{{guide.description}}</p>
                 </div>
                 <img class="duration_clock_icon" src="/img/guide_duration_clock_icon_small.svg" alt="Duration">
                 <span class="guide_duration">{{guide.duration}}</span>
+
+                <!-- Add New flag to guides from the past 30 days or 4 most recent posts. -->
+                <!-- If new posts count is less than 4, use 4 most recent posts -->
+                {% if new_guide_count < 4 %}
+                    {% if guide ==  all_guides_by_date[0] or guide ==  all_guides_by_date[1] 
+                    or guide ==  all_guides_by_date[2] or guide ==  all_guides_by_date[3] %}
+                        <div class="new_guide_container">
+                            <span class="guide_new">New</span>
+                        </div>
+                    {% endif %}
+
+                <!-- If new posts count is >= 4, use posts from last 30 days-->
+                {% else %}
+                    {% assign date_published = guide.releasedate | date:'%s' %}
+                    {% assign date_now = 'now' | date:'%s' %}
+                    {% assign date_difference = date_now | minus: date_published %}
+
+                    {% if date_difference < 2592000 %}
+                        <div class="new_guide_container">
+                            <span class="guide_new">New</span>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </a>
         </div>
         {% endfor %}
@@ -109,23 +146,47 @@ permalink: /guides/
 <div id="guides_microprofile_container" class="microprofile_section container">
     <div class="subtitle extraMP">
         <p><b class="essential">{{microprofile-essential-guides.size}} essentials</b></p>
-        <p>New to MicroProfile? <a class="orange_link_light_background" href="/docs/intro/microprofile.html"><b>Get an introduction here.</b></a></p>
+        <p>New to MicroProfile? <a class="orange_link_light_background" href="/docs/ref/general/#microprofile.html"><b>Get an introduction here.</b></a></p>
     </div>
     <div class="essential row">
         {% for guide in microprofile-essential-guides %}
-        <div class="guide_column col-xs-12 col-sm-6 col-md-3">
-            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="{{ guide.tags | join: ' ' | downcase }}">
+        <div class="guide_column col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="" data-search-keywords="{{ guide.search-keywords | join: ' ' | downcase }}">
                 <div class="guide_title_and_description_container">
                     <h3 class="guide_title">{{guide.title}}</h3>
                     <p class="guide_description" title="{{guide.description}}">{{guide.description}}</p>
                 </div>
                 <img class="duration_clock_icon" src="/img/guide_duration_clock_icon_small.svg" alt="Duration">
                 <span class="guide_duration">{{guide.duration}}</span>
-                {% if guide.layout == 'interactive-guide' or guide.layout == 'iguide-multipane' %}
-                <div class="guide_interactive_container">
-                    <img class="interactive_bolt_icon" src="/img/guide_lightning_bolt.svg" alt="Interactive">
-                    <span class="guide_interactive">Interactive</span>
-                </div>                    
+
+                <!-- Add New flag to guides from the past 30 days or 4 most recent posts. -->
+                <!-- If new posts count is less than 4, use 4 most recent posts -->
+                {% if new_guide_count < 4 %}
+                    {% if guide ==  all_guides_by_date[0] or guide ==  all_guides_by_date[1] 
+                    or guide ==  all_guides_by_date[2] or guide ==  all_guides_by_date[3] %}
+                        <div class="new_guide_container">
+                            <span class="guide_new">New</span>
+                        </div>
+                    {% endif %}
+
+                <!-- If new posts count is >= 4, use posts from last 30 days-->
+                {% else %}
+                    {% assign date_published = guide.releasedate | date:'%s' %}
+                    {% assign date_now = 'now' | date:'%s' %}
+                    {% assign date_difference = date_now | minus: date_published %}
+
+                    {% if date_difference < 2592000 %}
+                        <div class="new_guide_container">
+                            <span class="guide_new">New</span>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if guide.layout == 'iguide-multipane' %}
+                    <div class="guide_interactive_container">
+                        <img class="interactive_bolt_icon" src="/img/guide_lightning_bolt.svg" alt="Interactive">
+                        <span class="guide_interactive">Interactive</span>
+                    </div>                    
                 {% endif %}
             </a>
         </div>
@@ -133,26 +194,48 @@ permalink: /guides/
     </div>
     <div class="row extraMP">
         <div class="col-xs-12">
-            <button id="microprofile_more_guides_button" type="button" class="btn">
-                <p><span id="microprofile_more_guides_icon">+</span><b>{{microprofile-guides.size}} additional MicroProfile Guides</b></p>
-            </button>
+            <p id="additional_microprofile_guides">{{microprofile-guides.size}} additional MicroProfile Guides</p>
         </div>
     </div>
-    <div id="microprofile_more_guides" class="collapse row">
+    <div id="microprofile_more_guides" class="row">
         {% for guide in microprofile-guides %}
-        <div class="guide_column col-xs-12 col-sm-6 col-md-3">
-            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="{{ guide.tags | join: ' ' | downcase }}">
+        <div class="guide_column col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="" data-search-keywords="{{ guide.search-keywords | join: ' ' | downcase }}">
                     <div class="guide_title_and_description_container">
                         <h3 class="guide_title">{{guide.title}}</h3>
                         <p class="guide_description" title="{{guide.description}}">{{guide.description}}</p>
                     </div>
                     <img class="duration_clock_icon" src="/img/guide_duration_clock_icon_small.svg" alt="Duration">
                     <span class="guide_duration">{{guide.duration}}</span>
-                    {% if guide.layout == 'interactive-guide' or guide.layout == 'iguide-multipane' %}
-                    <div class="guide_interactive_container">
-                        <img class="interactive_bolt_icon" src="/img/guide_lightning_bolt.svg" alt="Interactive">
-                        <span class="guide_interactive">Interactive</span>
-                    </div>
+
+                    <!-- Add New flag to guides from the past 30 days or 4 most recent posts. -->
+                    <!-- If new posts count is less than 4, use 4 most recent posts -->
+                    {% if new_guide_count < 4 %}
+                        {% if guide ==  all_guides_by_date[0] or guide ==  all_guides_by_date[1] 
+                        or guide ==  all_guides_by_date[2] or guide ==  all_guides_by_date[3] %}
+                            <div class="new_guide_container">
+                                <span class="guide_new">New</span>
+                            </div>
+                        {% endif %}
+
+                    <!-- If new posts count is >= 4, use posts from last 30 days-->
+                    {% else %}
+                        {% assign date_published = guide.releasedate | date:'%s' %}
+                        {% assign date_now = 'now' | date:'%s' %}
+                        {% assign date_difference = date_now | minus: date_published %}
+
+                        {% if date_difference < 2592000 %}
+                            <div class="new_guide_container">
+                                <span class="guide_new">New</span>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if guide.layout == 'iguide-multipane' %}
+                        <div class="guide_interactive_container">
+                            <img class="interactive_bolt_icon" src="/img/guide_lightning_bolt.svg" alt="Interactive">
+                            <span class="guide_interactive">Interactive</span>
+                        </div>
                     {% endif %}
                 </a>
         </div>
@@ -178,19 +261,43 @@ permalink: /guides/
     </div>
     <div class="row">
         {% for guide in uncatagorized-guides %}
-        <div class="guide_column col-xs-12 col-sm-6 col-md-3">
-            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="{{ guide.tags | join: ' ' | downcase }}">
+        <div class="guide_column col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <a href="{{ guide.url }}.html" class="guide_item" data-title="{{ guide.title | downcase }}" data-description="{{ guide.description | downcase }}" data-tags="" data-search-keywords="{{ guide.search-keywords | join: ' ' | downcase }}">
                 <div class="guide_title_and_description_container">
                     <h3 class="guide_title">{{guide.title}}</h3>
                     <p class="guide_description" title="{{guide.description}}">{{guide.description}}</p>
                 </div>
                 <img class="duration_clock_icon" src="/img/guide_duration_clock_icon_small.svg" alt="Duration">
                 <span class="guide_duration">{{guide.duration}}</span>
-                {% if guide.layout == 'interactive-guide' or guide.layout == 'iguide-multipane' %}
-                <div class="guide_interactive_container">
-                    <img class="interactive_bolt_icon" src="/img/guide_lightning_bolt.svg" alt="Interactive">
-                    <span class="guide_interactive">Interactive</span>
-                </div>
+
+                <!-- Add New flag to guides from the past 30 days or 4 most recent posts. -->
+                <!-- If new posts count is less than 4, use 4 most recent posts -->
+                {% if new_guide_count < 4 %}
+                    {% if guide ==  all_guides_by_date[0] or guide ==  all_guides_by_date[1] 
+                    or guide ==  all_guides_by_date[2] or guide ==  all_guides_by_date[3] %}
+                        <div class="new_guide_container">
+                            <span class="guide_new">New</span>
+                        </div>
+                    {% endif %}
+
+                <!-- If new posts count is >= 4, use posts from last 30 days-->
+                {% else %}
+                    {% assign date_published = guide.releasedate | date:'%s' %}
+                    {% assign date_now = 'now' | date:'%s' %}
+                    {% assign date_difference = date_now | minus: date_published %}
+
+                    {% if date_difference < 2592000 %}
+                        <div class="new_guide_container">
+                            <span class="guide_new">New</span>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if guide.layout == 'iguide-multipane' %}
+                    <div class="guide_interactive_container">
+                        <img class="interactive_bolt_icon" src="/img/guide_lightning_bolt.svg" alt="Interactive">
+                        <span class="guide_interactive">Interactive</span>
+                    </div>
                 {% endif %}
             </a>
         </div>
