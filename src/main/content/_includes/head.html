@@ -26,11 +26,11 @@
   {% asset openliberty.css %}
   {% asset coderay-custom.css %}
 
-  {% for css_name in page.css %}
+  {% for css_name in layout.css %}
     {% asset {{css_name}} %}
   {% endfor %}
-  
-  {% for css_name in layout.css %}
+
+  {% for css_name in page.css %}
     {% asset {{css_name}} %}
   {% endfor %}
 
