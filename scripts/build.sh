@@ -8,8 +8,8 @@ gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703
 curl -sSL https://get.rvm.io | bash -s stable
 source /usr/local/rvm/scripts/rvm
 rvm requirements
-rvm install 2.4.1
-rvm use 2.4.1 --default
+rvm install 2.5.0
+rvm use 2.5.0 --default
 
 # Print out default locale and change it to en_US.UTF-8
 echo "Default locale:"
