@@ -1,3 +1,13 @@
+main {
+    margin-top: -60px;
+}
+
+@media (max-width: 991.98px) {
+    main {
+        margin-top: -50px;
+    }
+}
+
 body {
     overflow-x: hidden;
 }
@@ -17,7 +27,7 @@ body {
 
 #docs_intro_background {
     position: relative;
-    padding-top: 22px;
+    padding-top: 87px;
     padding-bottom: 18px;
     background-image: radial-gradient(farthest-corner at 50% 0%, #5e6b8d -10%, #2c2e50 100%);
     background-image: -webkit-radial-gradient(50% 0%, farthest-corner, #5e6b8d -10%, #2c2e50 100%);
@@ -242,7 +252,7 @@ body {
 
 #ufo {
     position: absolute;
-    top: 294px;
+    top: 359px;
     right: calc(50% + 222px);
 }
 

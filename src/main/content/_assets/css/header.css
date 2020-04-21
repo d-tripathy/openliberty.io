@@ -5,10 +5,8 @@ main {
 }
 
 .navbar {
-    padding: 10px 0px 10px 0px;
-    width: 80%;
-    max-width: 1560px;
-    margin: 0 auto;
+    padding: 10px 100px 10px 100px;
+    margin: 0px;
     z-index: 9999;
 }
 
@@ -25,17 +23,14 @@ main {
     padding: 10px 15px;	
 }
 
+.navbar-brand {
+    margin: 0px;
+    padding-right: 8px;
+}
+
 #ol_logo {
     width: 37px;
     height: 27px;
-}
-
-#ol_nav_title {
-    font-size: 24px;
-    font-family: BunueloBold, Arial Narrow, Helvetica, Arial;
-    color: #FFFFFF;
-    display: inline-block;
-    margin: 0 auto;
 }
 
 #tablet_nav {
@@ -43,9 +38,9 @@ main {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    margin-left: 34px;
+    margin-left: 30px;
     font-size: 16px;
-    color: #C9D6FE;
+    color: #ffffff;
     white-space: nowrap;
 }
 
@@ -56,7 +51,6 @@ main {
     padding-bottom: 2px;
     padding-left: 31px;
     padding-right: 31px;
-    margin-top: 2px;
     color: #E6EDA8;
 }
 
@@ -77,7 +71,7 @@ main {
 #header_round_links_container {
     text-align: center;
     margin-top: 45px;
-    padding-bottom: 183px;
+    padding-bottom: 25px;
 }
 
 #header_twitter_link {
@@ -107,13 +101,13 @@ main {
 
 @media (max-width: 991.98px) {
     main {
-        margin-top: -46px;
+        margin-top: -50px;
     }
 
     .navbar {
         padding: 0;
         width: 100%;
-        height: 46px;
+        height: 50px;
         border-bottom: 1px solid rgba(94, 107, 141, 0.29);
     }
     
@@ -126,12 +120,13 @@ main {
         max-width: 67%;
         z-index: 9999;
         margin-left: 33%;
-        margin-top: -46px;
+        margin-top: -50px;
     }
 
     .navbar-brand {
-        margin-left: 18px;
+        margin-left: 15px;
         z-index: 99999;
+        padding: 6px 8px 8px 0px;
     }
 
     .navbar-toggler {
@@ -148,6 +143,7 @@ main {
         position: relative;
         left: -10px;
         z-index: 99999;
+        padding-top: 4px;
     }
 
     .navbar-toggler.collapsed > .close_button, .navbar-toggler:not(.collapsed) > .navbar-toggler-icon {
@@ -157,7 +153,7 @@ main {
     .navbar-nav {
         padding-top: 25px;
         border-top: 1px solid rgba(94, 107, 141, 0.29);
-        margin-top: 45px;
+        margin-top: 55px;
     }
 
     .navbar-collapse {
@@ -170,6 +166,8 @@ main {
         color: #FFFFFF;
         margin-right: 26px;
         margin-left: 26px;
+        padding-top: 6px;
+        padding-bottom: 6px;
     }
 
     #float_right_section {
@@ -206,14 +204,6 @@ main {
 
     #header_round_links_container {
         margin-bottom: 40px;
-    }
-
-    .navbar-collapse.collapse.show {
-        height: 100vh;
-    }
-
-    #ol_nav_title {
-        visibility: hidden;
     }
 
     .qa-descriptor {

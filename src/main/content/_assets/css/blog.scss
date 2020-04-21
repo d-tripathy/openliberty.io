@@ -9,6 +9,12 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 
+ // override toggLE color to go with dark background on tablet only
+@media (min-width: 767px) and (max-width: 991.98px) {
+    .navbar-dark .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(235, 247, 173)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+    }
+}
 
 /* BLOG */
 body {
@@ -24,11 +30,12 @@ html {
     margin-top: 62px;
 
     @media (max-width: 991.98px) {
-        margin-top: 46px;
+        margin-top: 0px;
     }
 
     @media (max-width: 767.98px) {
         background: none;
+        margin-top: 46px;
     }
 }
 

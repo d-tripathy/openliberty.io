@@ -1,0 +1,261 @@
+/*******************************************************************************
+ * Copyright (c) 2018 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+
+.navbar {
+    padding: 11px 100px 9px 100px;
+    margin: 0px;
+    z-index: 9999;
+}
+
+.bg-custom {
+    background-color: transparent;
+}
+
+.qa-descriptor {	
+    position: absolute;	
+    top: 10px;	
+    right: 10px;	
+    color: blue;	
+    background-color: orange;	
+    padding: 10px 15px;	
+}
+
+.navbar-header {
+    padding-left: 14px;
+    padding-right: 15px;
+    height: 38px;
+}
+
+.navbar-brand {
+    padding: 6px 8px 8px 0px;
+    height: auto;
+
+    img {
+        width: 37px;
+        height: 27px;
+    }
+}
+
+.navbar-nav > li > a {
+    color: #ffffff;
+    font-size: 16px;
+    padding: 8px;
+    margin-left: 30px;
+
+    &:focus, &:hover {
+        background-color: transparent;
+        color: rgba(255,255,255,.75);
+    }
+}
+
+#fork_button {
+    border: 1px solid #ABD155;
+    color: #E6EDA8;
+    border-radius: 3px;
+    padding: 4px 31px 4px 31px;
+    margin-top: 4px;
+}
+
+#header_round_links_container {
+    text-align: center;
+    margin-top: 45px;
+    padding-bottom: 25px;
+}
+
+#header_twitter_link {
+    background-image: url("/img/Header_TwitterBird.svg");
+}
+
+#header_stackoverflow_link {
+    background-image: url("/img/Header_StackO.svg");
+    margin-left: 32px;
+}
+
+#header_groupsio_link {
+    background-image: url("/img/Header_GroupsIO.svg");
+    margin-left: 32px;
+}
+
+.header_round_btn {
+    display: inline-block;
+    height: 68px;       
+    width: 68px;
+}
+
+#tablet_images {
+    width: calc(100% + 30px);
+    position: relative;
+    left: -15px;
+}
+
+// override bootstrap breakpoint
+@media (max-width: 991px) {
+    .navbar-header {
+        float: none;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+
+    .navbar-nav > li {
+        float: none;
+    }
+
+    .navbar-collapse.collapse.in { 
+        display: block!important;
+    }
+    .collapsing {
+        overflow: hidden!important;
+    }
+}
+
+
+@media (max-width: 991.98px) {
+    main {
+        margin-top: -50px;
+    }
+
+    .navbar {
+        padding: 0;
+        // width: 100%;
+        height: 50px;
+        border-bottom: 1px solid rgba(94, 107, 141, 0.29);
+    }
+
+    .navbar .container-fluid {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .navbar-header {
+        padding: 0px;
+    }
+
+    #navbar {
+        max-width: 67%;
+        z-index: 9999;
+        margin-left: 33%;
+        margin-top: -50px;
+    }
+
+    .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+        margin-left: 14px;
+        margin-top: 5px;
+        z-index: 99999;
+    }
+
+    .navbar-toggle {
+        border: none;
+        z-index: 99999;
+        margin: 0;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .navbar-toggler-icon {
+        display: block;
+        width: 30px;
+        height: 30px;
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(235, 247, 173)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        z-index: 9999999;
+    }
+    
+    .close_button {
+        position: relative;
+        left: -10px;
+        z-index: 99999;
+        padding-top: 8px;
+    }
+
+    .navbar-toggle.collapsed > .close_button, .navbar-toggle:not(.collapsed) > .navbar-toggler-icon {
+        display: none;
+    }
+
+    .navbar-nav {
+        border-top: 1px solid rgba(94, 107, 141, 0.29);
+        padding-top: 25px;
+        margin-top: 60px;
+    }
+
+    .navbar-nav.navbar-right {
+        border-top: none;
+        margin-top: 0px;
+        padding-top: 0px;
+    }
+
+    .navbar-collapse {
+        background-image: radial-gradient(circle at bottom left, #5E6B8D 0%, #2C2E50 91%);
+    }
+    
+    .navbar-nav > li > a, .navbar-nav > li > a:hover, .navbar-nav > li > a:active, #fork_button {
+        font-family: BunueloLight, Arial Narrow, Helvetica, Arial;
+        font-size: 35px;
+        color: #FFFFFF;
+        margin-right: 26px;
+        margin-left: 26px;
+        padding-top: 22px;
+        padding-bottom: 22px;
+        padding-left: 0px;
+    }
+
+    #fork_button {
+        border: none;
+        padding-left: 0;
+        padding-top: 8px;
+        padding-bottom: 50px;
+        border-bottom: 1px solid rgba(201, 214, 254, 0.35);
+    }
+
+    #fork_button:hover {
+        color: #FFFFFF;
+        border: none;
+        border-bottom: 1px solid rgba(201, 214, 254, 0.35);
+    }
+
+}
+
+@media (max-width: 767.98px) {
+    .navbar-brand {
+        position: absolute;
+    }
+
+    #navbar {
+        max-width: 100%;
+        margin-left: 0;
+        border-bottom: 2px solid #FAFFC7;
+        position: relative;
+        top: -50px;
+    }
+
+    .navbar-header {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    #header_round_links_container {
+        margin-bottom: 40px;
+    }
+
+    .qa-descriptor {
+        display: none;
+    }
+
+}
