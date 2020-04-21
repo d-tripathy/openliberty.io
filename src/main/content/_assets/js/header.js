@@ -11,15 +11,15 @@
 
 
 // prevent scrolling when navbar dropdown is opened
-$(document).ready(function() {
+// $(document).ready(function() {
 
-    $('.navbar-toggler').click(function(){
+//     $('.navbar-toggler').click(function(){
 
-        if ($('.navbar-toggler').hasClass('collapsed')) {
-            $('body').css('overflow', 'hidden');
-        } else {
-            $('body').css('overflow', 'auto');
-        }
-    });
+//         if ($('.navbar-toggler').hasClass('collapsed')) {
+//             $('body').css('overflow', 'hidden');
+//         } else {
+//             $('body').css('overflow', 'auto');
+//         }
+//     });
 
-});
+// });

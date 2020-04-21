@@ -18,10 +18,25 @@
     src: url("/fonts/BunueloCleanPro-SemiBold.woff");
 }
 
-/* make the navbar sticky */
 .navbar {
-    position: fixed;
-    background-color: #313653;
+    border-bottom: 1px solid #d4d7e3;
+}
+
+.bg-custom {
+    background-color: white;
+}
+
+.navbar-nav > li > a {
+    color: #5E6B8D;
+}
+
+.navbar-nav > li > a:focus, .navbar-nav > li > a:hover {
+    color: #24253A;
+}
+
+#fork_button {
+    border: 1px solid #ABD155;
+    color: #4F660A;
 }
 
 #page_title {

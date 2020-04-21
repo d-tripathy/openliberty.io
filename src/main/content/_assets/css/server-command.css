@@ -38,7 +38,7 @@
 
 @media (min-width: 767px) {
     #toc_column {
-        padding-top: 121px;
+        padding-top: 80px;
     }
 }
 
@@ -81,7 +81,7 @@
 
 @media (min-width: 767px) {
     #command_content {
-        padding-top: 101px;
+        padding-top: 60px;
     }
 }
 

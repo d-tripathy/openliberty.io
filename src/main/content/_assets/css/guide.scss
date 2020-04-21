@@ -9,7 +9,28 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 
- #guide_content #mobile_prereqs_title {
+ .navbar {
+    border-bottom: 1px solid #d4d7e3;
+}
+
+.bg-custom {
+    background-color: white;
+}
+
+.navbar-nav > li > a {
+    color: #5E6B8D;
+}
+
+.navbar-nav > li > a:focus, .navbar-nav > li > a:hover {
+    color: #24253A;
+}
+
+#fork_button {
+    border: 1px solid #ABD155;
+    color: #4F660A;
+}
+
+#guide_content #mobile_prereqs_title {
     font-size: 16px;
     font-weight: 500;        
     line-height: 1.63;
