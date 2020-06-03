@@ -11,6 +11,7 @@
 // The background is shortened by 200px
 var backgroundSizeAdjustment = 200;
 var twoColumnBreakpoint = 1170;
+var twoColumnBreakpoint = 900;
 var threeColumnBreakpoint = 1440;
 
 function inSingleColumnView(){

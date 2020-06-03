@@ -9,6 +9,12 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 
+@media (min-width: 900px) and (max-width: 1169.98px) {
+    pre code {
+        white-space: pre;
+    }
+}
+
 #guide_content #mobile_prereqs_title {
     font-size: 16px;
     font-weight: 500;        
@@ -50,7 +56,7 @@
 
 /* HEADER and BREADCRUMB */
 
-@media (min-width: 1170px) {
+@media (min-width: 900px) {
     #nav_bar {
         position: fixed;
         top: 0;
@@ -371,10 +377,13 @@
     color: #24243B;
     width: 100%;
 
-    @media (min-width: 1170px) {
+    @media (min-width: 991px) {
         padding-top: 60px;
     }
 
+    @media (min-width: 900px) {
+        padding-top: 45px;
+    }
 }
 
 #guide_content > .sect1 {
@@ -438,7 +447,7 @@
     }
 }
 
-@media (min-width: 1170px) {
+@media (min-width: 900px) {
     #guide_content code.hotspot {
         background-color: #F1F4FE;
         color:#5e6b8d;
@@ -449,8 +458,8 @@
         background-color: #C7CCD9;
     }
 }
-    
-@media (max-width: 1169.98px) {
+
+@media (max-width: 899.98px) {
     header {
         position: static; /* Make the header non sticky in mobile view */
     }
