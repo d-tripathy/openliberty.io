@@ -629,6 +629,7 @@ $(document).ready(function() {
     }
 
     function processSearch(inputValue) {
+        console.log("processSearch called");
         if (inputValue.length == 0) {
             showAllCategories();
             updateTotals(false);
@@ -645,8 +646,12 @@ $(document).ready(function() {
     }
 
     $('#guide_search_input').on("keyup", function(event) {
+        console.log("guide_search_input keyup");
         var inputValue = event.currentTarget.value.toLowerCase();
         processSearch(inputValue);
+        updateSearchUrl(inputValue, true);
+
+
     });
 
     $(window).on('popstate', function(){
@@ -660,7 +665,7 @@ $(document).ready(function() {
     $('.clear_btn').on('click', function(){
         $('#guide_search_input').val('');
         var searchInput = $('#guide_search_input').val();
-        updateSearchUrl(searchInput);
+        updateSearchUrl(searchInput, false);
         processSearch(searchInput);        
         showAllCategories();
         updateTotals(false);
@@ -669,22 +674,30 @@ $(document).ready(function() {
     $('#guide_search_input').on("keypress", function(event) {
         if(event.which == 13) { // 13 is the enter key
             var searchInput = $('#guide_search_input').val();
-            updateSearchUrl(searchInput);
+            updateSearchUrl(searchInput, false);
         }
     });
 
-    function updateSearchUrl(value) {
+    function updateSearchUrl(value, onkeyup) {
+        console.log("updateSearchUrl called");
+        console.log("onkeyup: ", onkeyup)
         if (!value) {
             // Remove query string because search text is empty
             search_value = [location.protocol, '//', location.host, location.pathname].join('');
             history.pushState(null, "", search_value);
         } else {
             // Handle various search functions
-            _processSearchText(value);
+            _processSearchText(value, onkeyup);
         }
     }
 
-    function _processSearchText(value) {
+    function _processSearchText(value, onkeyup) {
+        console.log("value: ", value);
+        console.log("_processSearchText called");
+        console.log("onkeyup: ", onkeyup);
+
+        console.log("window.location.href: ", window.location.href);
+
         // We support searching with prefex
         // 1.  tag: <tag text>
         // 2.  Free form text
@@ -692,14 +705,39 @@ $(document).ready(function() {
             var searchTextWithoutTag = value.substring(value.indexOf(':') + 1);
             searchTextWithoutTag = searchTextWithoutTag.trim();
             search_value = '?search=' + encodeURIComponent(searchTextWithoutTag) + '&key=tag';
-            history.pushState(null, "", search_value);
-            document.activeElement.blur()
+            if (onkeyup) {
+                if (value.length == 1) {
+                    console.log("length is 1, pushing state");
+                    history.pushState(null, "", search_value);
+                }
+                else {
+                    console.log("length is not 1, replacing state");
+                    history.replaceState(null, "", search_value);
+                }
+            }
+            else {
+                history.pushState(null, "", search_value);
+                document.activeElement.blur()
+            }
         } else {
             value = value.trim();
             search_value = '?search=' + encodeURIComponent(value);
-            history.pushState(null, "", search_value);
-            document.activeElement.blur()
+            if (onkeyup) {
+                if (value.length == 1) {
+                    console.log("length is 1, pushing state");
+                    history.pushState(null, "", search_value);
+                }
+                else {
+                    console.log("length is not 1, replacing state");
+                    history.replaceState(null, "", search_value);
+                }
+            }
+            else {
+                history.pushState(null, "", search_value);
+                document.activeElement.blur()
+            }
         }
+        
     }
 
     function init() {
@@ -755,19 +793,21 @@ $(document).ready(function() {
     $('#back_to_guides_button').on('click', function() {
         $('#guide_search_input').val('');
         var searchInput = $('#guide_search_input').val();
-        updateSearchUrl(searchInput);
+        updateSearchUrl(searchInput, false);
         processSearch(searchInput);        
         showAllCategories();
     });
 
     // Click buttons to fill search bar
     $('#guides_search_container').on('click', '.tag_button', function() {
+        console.log("suggested tag button clicked");
         var inputValue = 'tag: ' + $(this).html();
         $('#guide_search_input').val(inputValue);
         $('.tag_button').removeClass('hidden');
         $(this).addClass('hidden');
         $('#guide_search_input').trigger('focus');
         processSearch(inputValue);
+        updateSearchUrl(inputValue, false);
     });
 
     // Handle click on caret button on mobile view
