@@ -617,6 +617,20 @@ footer {
     position: relative;
 }
 
+// .is-hidden {
+//     opacity: 0;
+//     transition: transform 10s, opacity 0.2s;
+// }
+
+.fixed_top {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    transition: all .5s ease-in-out;
+}
+
 /* TABLE CLASSES */
 .valign-top {
     vertical-align: top;

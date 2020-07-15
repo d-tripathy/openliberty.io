@@ -473,5 +473,15 @@ $(document).ready(function () {
 
 // Change height of toc if footer is in view so that fixed toc isn't visible through footer
 $(window).on('scroll', function() {
-    $('#toc_inner').height($('footer').offset().top - $('#toc_inner').offset().top);
+    $('#toc_column').height($('footer').offset().top - $('#toc_inner').offset().top); // might change to toc_column
+    $('#toc_inner').height($('footer').offset().top - $('#toc_inner').offset().top); // might change to toc_column
+
+    if ($(window).scrollTop() > 60) {
+        $('#toc_inner').css({"position":"fixed", "width":"25%"});
+
+        $("#toc_column").height("auto");
+    }
+    else {
+        $('#toc_inner').css({"position":"absolute", "width":"25vw", "top":"0px"});
+    }
 });

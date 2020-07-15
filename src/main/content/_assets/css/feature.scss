@@ -9,15 +9,15 @@
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
 
-@media (min-width: 767px) {
-    #nav_bar {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-    }
-}
+// @media (min-width: 767px) {
+//     #nav_bar {
+//         position: fixed;
+//         top: 0;
+//         right: 0;
+//         left: 0;
+//         z-index: 1030;
+//     }
+// }
 
 /* table of column styling */
 .toc_title_selected {
@@ -48,8 +48,11 @@
 
 @media (min-width: 767px) {
     #toc_inner {
-        position: fixed;
-        width: 25%;
+        // position: fixed;
+        // width: 25%;
+        position: absolute;
+        top: 0px;
+        width: 25vw;
     }
 }
 
@@ -73,15 +76,15 @@
 /* content styling */
 #feature_content {
     min-height: 100vh;
-    padding-top: 60px;
+    // padding-top: 60px;
 
-    @media (max-width: 991.98px) {
-        padding-top: 45px;
-    }
+    // @media (max-width: 991.98px) {
+    //     padding-top: 45px;
+    // }
 
-    @media (max-width: 767.98px) {
-        padding-top: 0px;
-    }
+    // @media (max-width: 767.98px) {
+    //     padding-top: 0px;
+    // }
 }
 
 #feature_content:focus {
