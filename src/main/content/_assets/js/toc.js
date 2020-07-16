@@ -56,7 +56,7 @@ function shrinkTOCIndicator() {
 function expandTOCIndicator() {
     $('#toc_line').css({
         "position":"fixed",
-        "top":"60px",
+        "top":"0px",
         "height": calculateTOCHeight()
     });
 }
